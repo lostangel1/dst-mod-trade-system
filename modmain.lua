@@ -3,16 +3,14 @@ local Vector3 = GLOBAL.Vector3
 local TheNet = GLOBAL.TheNet
 local MOD_RPC = GLOBAL.MOD_RPC
 local TheSim = GLOBAL.TheSim
-local net_bool = GLOBAL.net_bool
 local net_string = GLOBAL.net_string
 local SpawnPrefab = GLOBAL.SpawnPrefab
 local tonumber = GLOBAL.tonumber
-local os = GLOBAL.os
 local IsServer = TheNet:GetIsServer() or TheNet:IsDedicated()
 
 local ImageButton = require "widgets/imagebutton"
 local containers = require("containers")
-local io = GLOBAL.require("io")
+local io = require("io")
 
 local SellWidget = require("widgets/sellwidget")
 local MyPopUp = require("widgets/mypopup")

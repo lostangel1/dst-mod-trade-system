@@ -5,16 +5,39 @@ local Text = require "widgets/text"
 
 local defined_categories = require "category"
 
+local function TextToTable(text)
+    local resultStrList = {}
+    if text then
+        string.gsub(text, "[^,]+", function(w)
+            table.insert(resultStrList, w)
+        end)
+    end
+    return resultStrList
+end
+
 local function TextToTable2(text)
     local resultStrList = {}
-    string.gsub(text, '[^\n]+', function(w)
-        local listInList = {}
-        string.gsub(w, '[^,]+', function(v)
-            table.insert(listInList, v)
+    if text then
+        string.gsub(text, '[^\n]+', function(w)
+            local listInList = {}
+            string.gsub(w, '[^,]+', function(v)
+                table.insert(listInList, v)
+            end)
+            table.insert(resultStrList, listInList)
         end)
-        table.insert(resultStrList, listInList)
-    end)
+    end
     return resultStrList
+end
+
+local function ByteToChar(text)
+    local result = ""
+    local temptable = TextToTable(text)
+    if temptable ~= {} then
+        for k,v in pairs(temptable) do
+            result = result..string.char(tonumber(v))
+        end
+    end
+    return result
 end
 
 local function GetName(item)
@@ -75,6 +98,15 @@ local function ModifyPrefabName(name)
     end
 
     return name, ""
+end
+
+local function IsInList(tbl, name)
+    for k,v in pairs(tbl) do
+        if v == name then
+            return true
+        end
+    end
+    return false
 end
 
 local SellWidget = Class(Widget, function(self, remotetext)
@@ -174,6 +206,11 @@ local SellWidget = Class(Widget, function(self, remotetext)
             end
             --把分类按钮启用
             self.category_list:Enable()
+            --分类按钮切回第一个选项卡 即“全部”选项
+            if self.category_list then
+                self.categorypage = 1
+                self.text_category_list:SetString("全部")
+            end
         end
     )
     self.myselllist_next = self.myselllist:AddChild(ImageButton("images/lobbyscreen.xml", "DSTMenu_PlayerLobby_arrow_paperHL_R.tex"))
@@ -289,16 +326,7 @@ local SellWidget = Class(Widget, function(self, remotetext)
     self.tipswidet_background = self.tipswidget:AddChild(Image("images/fepanels.xml", "wideframe.tex"))
     self.tipswidet_background:SetScale(0.6, 0.9)
 
-    self.tipswidget_text = self.tipswidget:AddChild(Text(DEFAULTFONT, 40,
-[[每天登陆金币少于300者可领取10-50金币
-冒险世界及探险大陆的玩家每天扣1金币
-每次交易买家需付一定比例的手续费
-手续费=价格x当前世界的人数x10%
-点击灵子分解器可以出售物品
-每人可最多同时上架10样物品
-物品上架超过360天价格归零 480天销毁
-按Ctrl+X键可隐藏左下角猪币标志]]
-    ))
+    self.tipswidget_text = self.tipswidget:AddChild(Text(DEFAULTFONT, 40, ""))
 
     self.tipswidget:Hide()
 
@@ -312,6 +340,15 @@ local SellWidget = Class(Widget, function(self, remotetext)
             if self.tipswidget.shown then
                 self.tipswidget:Hide()
             else
+                --设置提示文本
+                local databaseurl = TheWorld.net.databaseurl:value()
+                databaseurl = ByteToChar(databaseurl)
+                TheSim:QueryServer(databaseurl.."/tips",
+                function(result, isSuccessful, resultCode)
+                    if isSuccessful and resultCode == 200 then
+                        self.tipswidget_text:SetMultilineTruncatedString(result, 8, 450, 50, false, false)
+                    end
+                end, "GET")
                 self.tipswidget:Show()
             end
         end
@@ -571,17 +608,17 @@ function SellWidget:MakeCategoryListButton(self, remotetext, cat)
     --根据分类保留
     if cat ~= 9 then -- 如果不是其他分类
         for k,v in pairs(_shoplist) do
-            local realname = ModifyPrefabName(v[1])..","
-            if string.find(defined_categories[cat], realname) then
+            local realname = ModifyPrefabName(v[1])
+            if IsInList(defined_categories[cat], realname) then
                 table.insert(shoplist, v)
             end
         end
     else
         for k,v in pairs(_shoplist) do
             local isfind = false
-            local realname = ModifyPrefabName(v[1])..","
+            local realname = ModifyPrefabName(v[1])
             for i,j in pairs(defined_categories) do
-                if string.find(j, realname) then
+                if IsInList(j, realname) then
                     isfind = true
                 end
             end

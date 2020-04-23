@@ -1,16 +1,39 @@
-# Trade System
+# 荒野求生服交易系统
 
 ## Overview
 
 ![](https://steamuserimages-a.akamaihd.net/ugc/1019445525422949962/EF47B813D7A9C9F3F9610018B70174349F74B652/)
 
-This is a mod for the game of Don't Starve Together which is available in the Steam Workshop. 
+本Mod引入一种玩家之间的交易系统，与其他玩家和系统商店的交易Mod不同，支持多层世界服务器跨世界交易
 
-It introduces a trade system among players, which is able to trade in multi-world server even players are not in the same world.
+特色：
+- 每天（现实的天）登录随机送10-50金币
+- 每次交易购买者会额外扣除金币作为手续费，额外扣除的金币数=物品价格×当前世界人数×5%
+- 每个玩家同时最多只能挂10样物品去出售
+- 每样物品挂上去出售后超过360天（游戏的天）价格自动归0，超过480天销毁，请及时取回
+- 按左Ctrl+X可以显示/隐藏右小角猪猪币标志
 
-Require a webserver along with a database for back end. Because of the difficulty, it's only used for my dedicated server.
+**注意：本Mod需后端Web服务器和数据库支持，单纯开启此Mod无效**
+
+因后端搭建需要一定程度的专业知识，此Mod仅用于荒野求生服务器，我们的服务器名：荒野求生多层世界档
+
+我的博客：https://jupitersh.gitee.io
+我们的QQ群：457300968
+
+致谢：感谢 Flynn 在做此Mod期间对我的帮助，感谢一包硬玉溪的贴图，感谢封锁提供的组合键代码，感谢希诺、糖糖等人帮忙测试Mod提供意见，感谢童话、Top奇等人帮忙提供商品分类
 
 ## Changelog
+
+### Version 1.3.1
+
+- 修复1.3.0遗留Bug
+- 修改分类检测机制，原来是用string.find，现在改为数组的形式来历遍数组
+- 修复Bug：库存选项切到“全部”时，分类选项没有切回“全部”
+
+### Version 1.3.0
+
+- 添加分类系统
+- 遗留Bug：分类切换时无法页码显示没有跳到1开始
 
 ## License
 
