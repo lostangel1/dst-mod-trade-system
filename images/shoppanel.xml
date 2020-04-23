@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Atlas>
+	<Texture filename="shoppanel.tex" />
+	<Elements>
+		<Element name="areyousure.tex" u1="0.001" u2="0.20603125" v2="0.999" v1="0.77053125" variant="" />
+		<Element name="button_next.tex" u1="0.20803125" u2="0.23874609375" v2="0.999" v1="0.95803125" variant="" />
+		<Element name="button_previous.tex" u1="0.20803125" u2="0.239234375" v2="0.95603125" v1="0.9150625" variant="" />
+		<Element name="buy_slot_bg.tex" u1="0.001" u2="0.0507578125" v2="0.76853125" v1="0.6699453125" variant="" />
+		<Element name="close.tex" u1="0.001" u2="0.016578125" v2="0.6679453125" v1="0.6308828125" variant="" />
+		<Element name="ok.tex" u1="0.0527578125" u2="0.0693125" v2="0.76853125" v1="0.725609375" variant="" />
+		<Element name="ones_slot_bg.tex" u1="0.018578125" u2="0.067359375" v2="0.6679453125" v1="0.5722890625" variant="" />
+		<Element name="sell_slot_bg.tex" u1="0.0713125" u2="0.122046875" v2="0.76853125" v1="0.6718984375" variant="" />
+		<Element name="shopbackground.tex" u1="0.20803125" u2="0.590796875" v2="0.9130625" v1="0.141625" variant="" />
+		<Element name="title.tex" u1="0.592796875" u2="0.8573984375" v2="0.999" v1="0.83303125" variant="" />
+		<Element name="trigerbutton.tex" u1="0.001" u2="0.0312265625" v2="0.5702890625" v1="0.5039296875" variant="" />
+	</Elements>
+</Atlas>
