@@ -269,9 +269,21 @@ local SellWidget = Class(Widget, function(self, remotetext)
     )
 
     --显示金币
-    self.pigcoin = self.sellwidget:AddChild(Image(GetInventoryItemAtlas("pig_coin.tex"), "pig_coin.tex"))
+    self.pigcoin = self.sellwidget:AddChild(ImageButton(GetInventoryItemAtlas("pig_coin.tex"), "pig_coin.tex"))
     self.pigcoin:SetPosition(-200, 640)
     self.pigcoin:SetScale(0.7)
+    self.pigcoin:SetOnClick(
+        function()
+            if self.moneytext and ThePlayer then
+                if self.moneytext:GetString() and self.moneytext:GetString() ~= "" then
+                    if ThePlayer.coin_just_say == nil or (os.time() - ThePlayer.coin_just_say) > 5 then
+                        TheNet:Say(STRINGS.LMB.." 我拥有 "..self.moneytext:GetString().." 个金币")
+                        ThePlayer.coin_just_say = os.time()
+                    end
+                end
+            end
+        end
+    )
     self.moneytext = self.sellwidget:AddChild(Text(NUMBERFONT, 40, ""))
     self.moneytext:SetPosition(-105, 637)
     self.moneytext:SetRegionSize(120,30)
