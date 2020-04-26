@@ -92,6 +92,11 @@ local function ModifyPrefabName(name)
         end
     end
 
+    --贝壳
+    if string.find(name, "singingshell_octave") then
+        name = name.."_1"
+    end
+
     --改石果的名字
     if name == "rock_avocado_fruit" then
         return "rock_avocado_fruit_rockhard", ""
