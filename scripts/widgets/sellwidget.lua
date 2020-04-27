@@ -55,6 +55,8 @@ local function GetName(item)
         return "甜"..STRINGS.NAMES[string.upper(item)]
     elseif string.find(item,"winter_ornament_light") then
         return "圣诞灯"
+    elseif item == "wobster_sheller_land" then
+        return STRINGS.NAMES[string.upper("wobster_sheller")]
     end
     return STRINGS.NAMES[string.upper(item)] or "神马东东"
 end
