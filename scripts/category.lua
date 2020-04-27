@@ -297,6 +297,7 @@ categories_lists[7] = {
     "watermelonhat",
     "dragonheadhat",
     "amulet",
+    "goggleshat",
 }
 
 --食物
@@ -317,7 +318,6 @@ categories_lists[8] = {
     "butterfly",
     "unagi",
     "green_mushroom",
-    "quagmire_onion",
     "dragonfruit",
     "cookedmonstermeat",
     "crumbs",
@@ -521,12 +521,22 @@ categories_lists[8] = {
     "tallbirdegg_cracked",
     "tallbirdegg",
     "butterflywings",
-    "quagmire_garlic",
     "pomegranate",
     "red_cap_cooked",
     "fishmeat_small_cooked",
     "smallmeat",
     "meat",
+    "lobsterdinner",
+    "lobsterbisque",
+    "wobster_sheller_dead_cooked",
+    "quagmire_tomato",
+    "quagmire_tomato_cooked",
+    "quagmire_garlic",
+    "quagmire_garlic_cooked",
+    "quagmire_potato",
+    "quagmire_potato_cooked",
+    "quagmire_onion",
+    "quagmire_onion_cooked",
 }
 
 return categories_lists
