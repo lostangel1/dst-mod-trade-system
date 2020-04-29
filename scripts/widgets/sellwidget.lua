@@ -275,10 +275,10 @@ local SellWidget = Class(Widget, function(self, remotetext)
         end
     )
 
-    --显示金币
-    self.pigcoin = self.sellwidget:AddChild(ImageButton(GetInventoryItemAtlas("pig_coin.tex"), "pig_coin.tex"))
-    self.pigcoin:SetPosition(-200, 640)
-    self.pigcoin:SetScale(0.7)
+    --显示金币 之前是用pigcoin图标 故取名
+    self.pigcoin = self.sellwidget:AddChild(ImageButton("images/shoppanel.xml", "coin.tex"))
+    self.pigcoin:SetPosition(-200, 637)
+    self.pigcoin:SetScale(1)
     self.pigcoin:SetOnClick(
         function()
             if self.moneytext and ThePlayer then
@@ -340,7 +340,6 @@ local SellWidget = Class(Widget, function(self, remotetext)
 
     self.tipswidget = self.sellwidget:AddChild(Widget("tipswidget"))
     self.tipswidget:SetPosition(-700, 520)
-    self.tipswidget:SetScale(1.1)
 
     self.tipswidet_background = self.tipswidget:AddChild(Image("images/fepanels.xml", "wideframe.tex"))
     self.tipswidet_background:SetScale(0.6, 0.9)
@@ -372,6 +371,22 @@ local SellWidget = Class(Widget, function(self, remotetext)
             end
         end
     )
+
+    --每次进入游戏第一次打开UI通知
+    self.server_notice = self.sellwidget:AddChild(Widget("server_notice"))
+    self.server_notice:SetPosition(700, 520)
+    self.server_notice_bg = self.server_notice:AddChild(Image("images/fepanels.xml", "wideframe.tex"))
+    self.server_notice_bg:SetScale(0.6, 0.9)
+    self.server_notice_text = self.server_notice:AddChild(Text(DEFAULTFONT, 40, ""))
+    self.server_notice_ok = self.server_notice:AddChild(ImageButton("images/shoppanel.xml", "ok.tex"))
+    self.server_notice_ok:SetPosition(0, -120)
+    self.server_notice_ok:SetScale(0.8)
+    self.server_notice_ok:SetOnClick(
+        function()
+            self.server_notice:Hide()
+        end
+    )
+    self.server_notice:Hide()
 end)
 
 function SellWidget:MakeFullListButton(self, remotetext)

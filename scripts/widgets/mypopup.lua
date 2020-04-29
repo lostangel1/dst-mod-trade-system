@@ -3,8 +3,8 @@ local ImageButton = require "widgets/imagebutton"
 local Image = require "widgets/image"
 local TextEdit = require "widgets/textedit"
 
-local mypopup = Class(Widget, function(self, remotetext)
-    Widget._ctor(self, "mypopup")
+local MyPopUp = Class(Widget, function(self, remotetext)
+    Widget._ctor(self, "MyPopUp")
 
     self.page_number = 1
 
@@ -50,4 +50,4 @@ local mypopup = Class(Widget, function(self, remotetext)
     self.textinput:SetFocusedImage(self.textinputbg, "images/global_redux.xml", "textbox3_gold_small_normal.tex", "textbox3_gold_small_hover.tex", "textbox3_gold_small_focus.tex")
 end)
 
-return mypopup
+return MyPopUp

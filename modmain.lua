@@ -14,6 +14,7 @@ local io = require("io")
 
 local SellWidget = require("widgets/sellwidget")
 local MyPopUp = require("widgets/mypopup")
+local Lottery = require("widgets/lottery")
 
 Assets = {
     Asset("ATLAS", "images/shoppanel.xml"),
@@ -80,7 +81,7 @@ AddModRPCHandler("shop", "sell", function(player, inst, itemvalue, ...)
     --冒险世界和探险大陆不能交易
     if GetModConfigData("adventure_world_limit") then
         --世界7和世界9是冒险和探险的ID
-        if GLOBAL.TheShard:GetShardId() == "7" or GLOBAL.TheShard:GetShardId() == "9" then
+        if GLOBAL.TheShard:GetShardId() == "7" then
             return
         end
     end
@@ -147,7 +148,7 @@ AddModRPCHandler("shop", "buy", function(player, itemstring)
     --冒险世界和探险大陆不能交易
     if GetModConfigData("adventure_world_limit") then
         --世界7和世界9是冒险和探险的ID
-        if GLOBAL.TheShard:GetShardId() == "7" or GLOBAL.TheShard:GetShardId() == "9" then
+        if GLOBAL.TheShard:GetShardId() == "7" then
             return
         end
     end
@@ -318,7 +319,7 @@ if IsServer then
 
     --冒险世界和探险大陆每天减金币
     if GetModConfigData("adventure_world_limit") then
-        if GLOBAL.TheShard:GetShardId() == "7" or GLOBAL.TheShard:GetShardId() == "9" then
+        if GLOBAL.TheShard:GetShardId() == "7" then
             AddPlayerPostInit(function(player)
                 player:WatchWorldState("cycles", function()
                     local gameday = GLOBAL.TheWorld.state.cycles + 1 + GLOBAL.TheWorld.state.time - GLOBAL.TheWorld.state.time % 0.001
@@ -387,6 +388,9 @@ if not IsServer then
         local databaseurl = GLOBAL.TheWorld.net.databaseurl:value()
         local databaseurl = ByteToChar(databaseurl)
 
+        self.shouldnotice = true
+
+        --商店页面
         local function UpdatePanel()
             --执行访问网页 物品相关 更新shoplists
             local worldday = GLOBAL.TheWorld.state.cycles + 1 + GLOBAL.TheWorld.state.time - GLOBAL.TheWorld.state.time % 0.001
@@ -430,6 +434,17 @@ if not IsServer then
                                         end
                                     )
                                     self.sellwidget:Show()
+                                    --每次进入游戏第一次打开UI通知
+                                    if self.shouldnotice then
+                                        TheSim:QueryServer(databaseurl.."/servernotice",
+                                        function(result, isSuccessful, resultCode)
+                                            if isSuccessful and resultCode == 200 then
+                                                self.sellwidget.server_notice_text:SetMultilineTruncatedString(result, 8, 450, 50, false, false)
+                                                self.sellwidget.server_notice:Show()
+                                                self.shouldnotice = false
+                                            end
+                                        end, "GET")
+                                    end
                                 end
                             end
                         end, "GET")
@@ -451,6 +466,65 @@ if not IsServer then
             function()
                 if not (self.sellwidget and self.sellwidget.shown) then
                     UpdatePanel()
+                end
+            end
+        )
+
+        --彩票页面
+        local function UpdateLottery()
+            if GLOBAL.ThePlayer then
+                local combineurl = databaseurl.."/getlottery?userid="..GLOBAL.ThePlayer.userid
+                TheSim:QueryServer(combineurl,
+                function(numbers, isSuccessful, resultCode)
+                    if isSuccessful  and resultCode == 200 then
+                    --执行访问网页 金币相关 更新playermoney
+                        local gameday = GLOBAL.TheWorld.state.cycles + 1 + GLOBAL.TheWorld.state.time - GLOBAL.TheWorld.state.time % 0.001
+                        local myurl = databaseurl.."/money?userid="..GLOBAL.ThePlayer.userid.."&gameday="..gameday
+                        TheSim:QueryServer(myurl,
+                        function(playermoney, isSuccessful, resultCode)
+                            if isSuccessful and resultCode == 200 then
+                                --修改玩家金币显示
+                                if GLOBAL.ThePlayer and GLOBAL.ThePlayer.userid then
+                                    local moneytable = TextToTable2(playermoney)
+                                    local currentmoney = 0
+                                    for k,v in pairs(moneytable) do
+                                        if v[1] == GLOBAL.ThePlayer.userid then
+                                            currentmoney = v[2]
+                                        end
+                                    end
+                                    --下面3行修复金币显示n位小数 目前保留2位小数
+                                    currentmoney = tonumber(currentmoney)
+                                    currentmoney = currentmoney - currentmoney % 0.01
+                                    currentmoney = string.format(currentmoney)
+                                    self.lotterywidget = self.top_root:AddChild(Lottery(numbers, databaseurl))
+                                    self.lotterywidget:SetPosition(0, -700)
+                                    self.lotterywidget:SetScale(0.7)
+                                    self.lotterywidget.moneytext:SetString(currentmoney)
+                                    self.lotterywidget.closebutton:SetOnClick(
+                                        function()
+                                            if self.lotterywidget then
+                                                self.lotterywidget:Kill()
+                                                self.lotterywidget = nil
+                                            end
+                                        end
+                                    )
+                                end
+                            end
+                        end, "GET")
+                    end
+                end, "GET")
+            end
+        end
+
+        --触发开启彩票页面的按钮
+        self.lottery_triger = self.bottomright_root:AddChild(ImageButton("images/shoppanel.xml", "lottery_triger.tex"))
+        self.lottery_triger:SetPosition(-150, 50, 0)
+        self.lottery_triger:SetHoverText("彩票", {offset_y = -36, font_size = 16})
+        self.lottery_triger:Hide()
+        self.lottery_triger:SetOnClick(
+            function()
+                if not (self.lotterywidget and self.lotterywidget.shown) then
+                    UpdateLottery()
                 end
             end
         )
@@ -486,8 +560,13 @@ if not IsServer then
         AddComboKeyUpHandler({306}, 120, function()
             if self.trigerbutton.shown then
                 self.trigerbutton:Hide()
+                self.lottery_triger:Show()
+            elseif self.lottery_triger.shown then
+                self.trigerbutton:Hide()
+                self.lottery_triger:Hide()
             else
                 self.trigerbutton:Show()
+                self.lottery_triger:Hide()
             end
         end)
 

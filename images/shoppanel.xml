@@ -7,11 +7,17 @@
 		<Element name="button_previous.tex" u1="0.21047265625" u2="0.2402109375" v2="0.9570078125" v1="0.917015625" variant="" />
 		<Element name="buy_slot_bg.tex" u1="0.001" u2="0.05319921875" v2="0.7636484375" v1="0.6601796875" variant="" />
 		<Element name="close.tex" u1="0.21047265625" u2="0.2323984375" v2="0.915015625" v1="0.8730703125" variant="" />
-		<Element name="ok.tex" u1="0.21047265625" u2="0.233375" v2="0.8710703125" v1="0.823265625" variant="" />
-		<Element name="ones_slot_bg.tex" u1="0.05519921875" u2="0.106421875" v2="0.7636484375" v1="0.663109375" variant="" />
-		<Element name="sell_slot_bg.tex" u1="0.108421875" u2="0.16159765625" v2="0.7636484375" v1="0.6621328125" variant="" />
-		<Element name="shopbackground.tex" u1="0.2422109375" u2="0.6249765625" v2="0.999" v1="0.225609375" variant="" />
-		<Element name="title.tex" u1="0.6269765625" u2="0.89401953125" v2="0.999" v1="0.8281484375" variant="" />
-		<Element name="trigerbutton.tex" u1="0.89601953125" u2="0.93308203125" v2="0.999" v1="0.9277578125" variant="" />
+		<Element name="coin.tex" u1="0.21047265625" u2="0.22800390625" v2="0.8710703125" v1="0.8340078125" variant="" />
+		<Element name="commonpop.tex" u1="0.2422109375" u2="0.44968359375" v2="0.999" v1="0.7656484375" variant="" />
+		<Element name="lottery_bg.tex" u1="0.05519921875" u2="0.309546875" v2="0.7636484375" v1="0.4023671875" variant="" />
+		<Element name="lottery_select_bg.tex" u1="0.45168359375" u2="0.4960703125" v2="0.999" v1="0.9082265625" variant="" />
+		<Element name="lottery_triger.tex" u1="0.45168359375" u2="0.48874609375" v2="0.9062265625" v1="0.834984375" variant="" />
+		<Element name="ok.tex" u1="0.45168359375" u2="0.4745859375" v2="0.832984375" v1="0.7851796875" variant="" />
+		<Element name="ones_slot_bg.tex" u1="0.311546875" u2="0.36276953125" v2="0.7636484375" v1="0.663109375" variant="" />
+		<Element name="sell_slot_bg.tex" u1="0.36476953125" u2="0.4179453125" v2="0.7636484375" v1="0.6621328125" variant="" />
+		<Element name="shopbackground.tex" u1="0.4980703125" u2="0.8808359375" v2="0.999" v1="0.225609375" variant="" />
+		<Element name="task_triger.tex" u1="0.8828359375" u2="0.9198984375" v2="0.999" v1="0.9277578125" variant="" />
+		<Element name="title.tex" u1="0.001" u2="0.26804296875" v2="0.4003671875" v1="0.229515625" variant="" />
+		<Element name="trigerbutton.tex" u1="0.9218984375" u2="0.9589609375" v2="0.999" v1="0.9277578125" variant="" />
 	</Elements>
 </Atlas>
