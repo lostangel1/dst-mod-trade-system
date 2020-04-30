@@ -25,6 +25,10 @@
 
 ## Changelog
 
+### Version 1.4.1
+
+- 给右下角按钮增加CD，以免连按出现bug
+
 ### Version 1.4.0
 
 - 添加彩票系统

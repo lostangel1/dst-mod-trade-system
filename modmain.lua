@@ -7,6 +7,7 @@ local net_string = GLOBAL.net_string
 local SpawnPrefab = GLOBAL.SpawnPrefab
 local tonumber = GLOBAL.tonumber
 local IsServer = TheNet:GetIsServer() or TheNet:IsDedicated()
+local os = GLOBAL.os
 
 local ImageButton = require "widgets/imagebutton"
 local containers = require("containers")
@@ -394,7 +395,7 @@ if not IsServer then
         local function UpdatePanel()
             --执行访问网页 物品相关 更新shoplists
             local worldday = GLOBAL.TheWorld.state.cycles + 1 + GLOBAL.TheWorld.state.time - GLOBAL.TheWorld.state.time % 0.001
-            local combineurl = databaseurl.."/update?worldday="..worldday
+            local combineurl = databaseurl.."/update"
             TheSim:QueryServer(combineurl,
             function(shoplists, isSuccessful, resultCode)
                 if isSuccessful  and resultCode == 200 then
@@ -429,8 +430,10 @@ if not IsServer then
                                     self.sellwidget.moneytext:SetString(currentmoney)
                                     self.sellwidget.closebutton:SetOnClick(
                                         function()
-                                            self.sellwidget:Kill()
-                                            self.sellwidget = nil
+                                            if self.sellwidget then
+                                                self.sellwidget:Kill()
+                                                self.sellwidget = nil
+                                            end
                                         end
                                     )
                                     self.sellwidget:Show()
@@ -465,7 +468,10 @@ if not IsServer then
         self.trigerbutton:SetOnClick(
             function()
                 if not (self.sellwidget and self.sellwidget.shown) then
-                    UpdatePanel()
+                    if GLOBAL.ThePlayer.lastTimeofClick == nil or (os.time() - GLOBAL.ThePlayer.lastTimeofClick) > 3 then
+                        UpdatePanel()
+                        GLOBAL.ThePlayer.lastTimeofClick = os.time()
+                    end
                 end
             end
         )
@@ -496,6 +502,10 @@ if not IsServer then
                                     currentmoney = tonumber(currentmoney)
                                     currentmoney = currentmoney - currentmoney % 0.01
                                     currentmoney = string.format(currentmoney)
+                                    if self.lotterywidget then
+                                        self.lotterywidget:Kill()
+                                        self.lotterywidget = nil
+                                    end
                                     self.lotterywidget = self.top_root:AddChild(Lottery(numbers, databaseurl))
                                     self.lotterywidget:SetPosition(0, -700)
                                     self.lotterywidget:SetScale(0.7)
@@ -524,7 +534,10 @@ if not IsServer then
         self.lottery_triger:SetOnClick(
             function()
                 if not (self.lotterywidget and self.lotterywidget.shown) then
-                    UpdateLottery()
+                    if GLOBAL.ThePlayer.lastTimeofClick == nil or (os.time() - GLOBAL.ThePlayer.lastTimeofClick) > 3 then
+                        UpdateLottery()
+                        GLOBAL.ThePlayer.lastTimeofClick = os.time()
+                    end
                 end
             end
         )
