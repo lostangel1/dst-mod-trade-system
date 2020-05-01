@@ -600,8 +600,9 @@ function SellWidget:MakeOnesListButton(self, remotetext)
                     self[buttonname.."value"]:SetRegionSize(50,30)
                     self[buttonname.."value"]:SetHAlign(1) --ANCHOR_LEFT 详细见constant.lua
                     --每个格子品显示物品挂上去的时间
-                    itemday = math.floor(tonumber(itemday) + 0.5)
-                    self[buttonname.."prefab"]:SetHoverText("上架时间 第"..itemday.."天", {offset_y = -36, font_size = 16})
+                    local worldday = TheWorld.state.cycles + 1 + TheWorld.state.time - TheWorld.state.time % 0.001
+                    itemday = math.floor(tonumber(worldday - itemday) + 0.5)
+                    self[buttonname.."prefab"]:SetHoverText("上架时间 "..itemday.."天前", {offset_y = -36, font_size = 16})
                 end
                 count = count + 1
             end

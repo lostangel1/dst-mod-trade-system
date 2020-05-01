@@ -464,7 +464,7 @@ if not IsServer then
         --触发开启商店的按钮
         self.trigerbutton = self.bottomright_root:AddChild(ImageButton("images/shoppanel.xml", "trigerbutton.tex"))
         self.trigerbutton:SetPosition(-150, 50, 0)
-        self.trigerbutton:SetHoverText("交易站", {offset_y = -36, font_size = 16})
+        self.trigerbutton:SetHoverText("交易站\nCtrl+X切换", {offset_y = -36, font_size = 16})
         self.trigerbutton:SetOnClick(
             function()
                 if not (self.sellwidget and self.sellwidget.shown) then
@@ -529,7 +529,7 @@ if not IsServer then
         --触发开启彩票页面的按钮
         self.lottery_triger = self.bottomright_root:AddChild(ImageButton("images/shoppanel.xml", "lottery_triger.tex"))
         self.lottery_triger:SetPosition(-150, 50, 0)
-        self.lottery_triger:SetHoverText("彩票", {offset_y = -36, font_size = 16})
+        self.lottery_triger:SetHoverText("彩票\nCtrl+X切换", {offset_y = -36, font_size = 16})
         self.lottery_triger:Hide()
         self.lottery_triger:SetOnClick(
             function()

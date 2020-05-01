@@ -116,7 +116,8 @@ local Lottery = Class(Widget, function(self, numbers, databaseurl)
                 return
             end 
             if self.popup and not self.popup.shown then
-                self.popup_text:SetString("号码"..string.sub(self.lottery_num,1,3).." 数量"..string.sub(self.lottery_num,4,4))
+                local cost = tonumber(string.sub(self.lottery_num,4,4)) * 5
+                self.popup_text:SetString("号码"..string.sub(self.lottery_num,1,3).." 数量"..string.sub(self.lottery_num,4,4).."\n需要"..cost.."金币")
                 self.popup:Show()
             end
         end
@@ -162,7 +163,8 @@ local Lottery = Class(Widget, function(self, numbers, databaseurl)
                 return
             end 
             if self.popup and not self.popup.shown then
-                self.popup_text:SetString("号码"..string.sub(self.lottery_num,1,3).." 数量"..string.sub(self.lottery_num,4,4))
+                local cost = tonumber(string.sub(self.lottery_num,4,4)) * 5
+                self.popup_text:SetString("号码"..string.sub(self.lottery_num,1,3).." 数量"..string.sub(self.lottery_num,4,4).."\n需要"..cost.."金币")
                 self.popup:Show()
             end
         end
@@ -208,7 +210,8 @@ local Lottery = Class(Widget, function(self, numbers, databaseurl)
                 return
             end 
             if self.popup and not self.popup.shown then
-                self.popup_text:SetString("号码"..string.sub(self.lottery_num,1,3).." 数量"..string.sub(self.lottery_num,4,4))
+                local cost = tonumber(string.sub(self.lottery_num,4,4)) * 5
+                self.popup_text:SetString("号码"..string.sub(self.lottery_num,1,3).." 数量"..string.sub(self.lottery_num,4,4).."\n需要"..cost.."金币")
                 self.popup:Show()
             end
         end
@@ -251,6 +254,7 @@ local Lottery = Class(Widget, function(self, numbers, databaseurl)
     self.popup_text:SetPosition(0, 15)
     self.popup_ok = self.popup:AddChild(ImageButton("images/shoppanel.xml", "ok.tex"))
     self.popup_ok:SetPosition(-60, -30)
+    self.popup_ok:SetScale(0.8)
     self.popup_ok:SetOnClick(
         function()
             if ThePlayer then
@@ -271,6 +275,7 @@ local Lottery = Class(Widget, function(self, numbers, databaseurl)
     )
     self.popup_close = self.popup:AddChild(ImageButton("images/shoppanel.xml", "close.tex"))
     self.popup_close:SetPosition(60, -30)
+    self.popup_close:SetScale(0.8)
     self.popup_close:SetOnClick(
         function()
             self.popup:Hide()

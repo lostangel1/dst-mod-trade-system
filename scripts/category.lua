@@ -234,6 +234,7 @@ categories_lists[5] = {
     "icestaff",
     "thurible",
     "nightsword",
+    "trident",
 }
 
 --护甲
