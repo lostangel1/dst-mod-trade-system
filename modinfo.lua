@@ -6,7 +6,7 @@ description = [[
 ]]
 
 author = "辣椒小皇纸"
-version = "1.4.2"
+version = "1.4.3"
 forumthread = ""
 api_version = 10
 

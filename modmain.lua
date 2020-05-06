@@ -79,10 +79,10 @@ local destinyUrl = ByteToChar(readtext)
 --添加RPC处理
 
 AddModRPCHandler("shop", "sell", function(player, inst, itemvalue, ...)
-    --冒险世界和探险大陆不能交易
+    --冒险世界和角斗场不能交易
     if GetModConfigData("adventure_world_limit") then
-        --世界7和世界9是冒险和探险的ID
-        if GLOBAL.TheShard:GetShardId() == "7" then
+        --世界7和世界10是冒险和角斗场的ID
+        if GLOBAL.TheShard:GetShardId() == "7" or GLOBAL.TheShard:GetShardId() == "10" then
             return
         end
     end
@@ -146,10 +146,10 @@ AddModRPCHandler("shop", "sell", function(player, inst, itemvalue, ...)
 end)
 
 AddModRPCHandler("shop", "buy", function(player, itemstring)
-    --冒险世界和探险大陆不能交易
+    --冒险世界和角斗场不能交易
     if GetModConfigData("adventure_world_limit") then
-        --世界7和世界9是冒险和探险的ID
-        if GLOBAL.TheShard:GetShardId() == "7" then
+        --世界7和世界10是冒险和角斗场的ID
+        if GLOBAL.TheShard:GetShardId() == "7" or GLOBAL.TheShard:GetShardId() == "10" then
             return
         end
     end
